@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<!-- sate up project -->
 
-## Getting Started
+## menggunakan next js
 
-First, run the development server:
+- npx create-next-app@latest
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## menggunakan ui.shadcn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- npx shadcn@latest init
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## password supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- uJTeWwFTALUv6ZcQ
 
-## Learn More
+## installl prisma
 
-To learn more about Next.js, take a look at the following resources:
+- npm install prisma
+- npx prisma init
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## migrasi ke supabase
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- npx prisma migrate dev --name init
+- npx prisma migrate dev (membuat migrate lagi)
 
-## Deploy on Vercel
+## mengambil data dan memodifikasi database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- npm install @prisma/client
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## install lucia untuk auth
+
+- npm install lucia
+
+## install adapter lucia ke prisma
+
+- npm install @lucia-auth/adapter-prisma
+  (kalau terjadi error gunakan kode dibawah ini)
+
+- npm install @prisma/client@5 @lucia-auth/adapter-prisma
+
+ <!-- persiapan untuk pembuatan login -->
+
+## intall setiap komponen yang mau dipakai
+
+- npx shadcn@latest add card
+- npx shadcn@latest add input
+- npx shadcn@latest add label
+- npx shadcn@latest add breadcrumb
+- npx shadcn@latest add tooltip
+- npx shadcn@latest add badge
+- npx shadcn@latest add select
+- npx shadcn@latest add textarea
+- npx shadcn@latest add table
+- npm install @tanstack/react-table
+
+## membuat validasi sign-in menggunakan zood
+
+- npm install zod
+
+## instal bcrypt untuk menghasing password
+
+- npm install bcrypt (install tahap pertama)
+- npm i --save-dev @types/bcrypt (install tahap kedue)
+
+## install alert pemberitahuan
+
+- npx shadcn@latest add alert
