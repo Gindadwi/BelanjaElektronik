@@ -2,7 +2,7 @@ import prisma from "../../../../../../../lib/prisma";
 
 export async function getCatgories() {
   try {
-    const categories = await prisma.category.findMany({});
+    const categories = await prisma.location.findMany({});
     return categories;
   } catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ export async function getCatgories() {
 
 export async function getCategoryById(id: string) {
   try {
-    const category = await prisma.category.findFirst({
+    const category = await prisma.location.findFirst({
       where: { id: Number.parseInt(id) },
     });
     return category;

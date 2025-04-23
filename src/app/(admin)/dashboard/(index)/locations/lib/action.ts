@@ -20,7 +20,7 @@ export async function postCategory(
   }
 
   try {
-    await prisma.category.create({
+    await prisma.location.create({
       data: {
         name: validate.data.name,
       },
@@ -32,7 +32,7 @@ export async function postCategory(
     };
   }
 
-  return redirect("/dashboard/categories");
+  return redirect("/dashboard/locations");
 }
 
 export async function updateCategory(
@@ -52,12 +52,12 @@ export async function updateCategory(
 
   if (id === undefined) {
     return {
-      error: "Category ID is required",
+      error: "location ID is required",
     };
   }
 
   try {
-    await prisma.category.update({
+    await prisma.location.update({
       where: { id },
       data: {
         name: validate.data.name,
@@ -79,15 +79,15 @@ export async function deleteCategory(
   id: number | undefined
 ): Promise<ActionResult> {
   try {
-    await prisma.category.delete({
+    await prisma.location.delete({
       where: { id },
     });
   } catch (error) {
     console.log(error);
     return {
-      error: "Failed to delete category",
+      error: "Failed to delete location",
     };
   }
 
-  return redirect("/dashboard/categories");
+  return redirect("/dashboard/locations");
 }

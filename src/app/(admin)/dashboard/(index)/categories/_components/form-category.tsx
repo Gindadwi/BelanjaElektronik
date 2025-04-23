@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { AlertCircle, ChevronLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,15 +17,41 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ActionResult } from "@/types";
-import { useFormState } from "react-dom";
-import { postCategory } from "../categories/lib/action";
+import { useFormState, useFormStatus } from "react-dom";
+import { postCategory, updateCategory } from "../lib/action";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Category } from "@prisma/client";
 
 const initialState: ActionResult = {
   error: "",
 };
 
-export default function FormCategory() {
-  const [state, formAction] = useFormState(postCategory, initialState);
+interface FormCategoryProps {
+  type?: "ADD" | "EDIT";
+  data?: Category | null;
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="sm">
+      {pending ? "Loading..." : "Save Category"}
+    </Button>
+  );
+}
+
+export default function FormCategory({
+  data = null,
+  type = "ADD",
+}: FormCategoryProps) {
+  const updateCategoryWithId = async (_: unknown, formData: FormData) =>
+    updateCategory(_, formData, data?.id);
+
+  const [state, formAction] = useFormState(
+    type === "ADD" ? postCategory : updateCategoryWithId,
+    initialState
+  );
 
   return (
     <form action={formAction}>
@@ -46,9 +72,8 @@ export default function FormCategory() {
               <Button variant="outline" size="sm">
                 Discard
               </Button>
-              <Button type="submit" size="sm">
-                Save Product
-              </Button>
+
+              <SubmitButton />
             </div>
           </div>
           <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -61,6 +86,14 @@ export default function FormCategory() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+                  {state.error !== "" && (
+                    <Alert variant="destructive" className="mb-4">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertTitle>Error</AlertTitle>
+                      <AlertDescription>{state.error}</AlertDescription>
+                    </Alert>
+                  )}
+
                   <div className="grid gap-6">
                     <div className="grid gap-3">
                       <Label htmlFor="name">Name</Label>
@@ -69,6 +102,7 @@ export default function FormCategory() {
                         name="name"
                         type="text"
                         className="w-full"
+                        defaultValue={data?.name}
                       />
                     </div>
                     {/* <div className="grid gap-3">
@@ -295,7 +329,7 @@ export default function FormCategory() {
             <Button variant="outline" size="sm">
               Discard
             </Button>
-            <Button size="sm">Save Product</Button>
+            <Button size="sm">Save Category</Button>
           </div>
         </div>
       </main>
