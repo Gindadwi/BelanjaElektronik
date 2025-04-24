@@ -8,6 +8,10 @@
 
 - npx shadcn@latest init
 
+## install Supabase
+
+- npm install @supabase/supabase-js
+
 ## password supabase
 
 - uJTeWwFTALUv6ZcQ
