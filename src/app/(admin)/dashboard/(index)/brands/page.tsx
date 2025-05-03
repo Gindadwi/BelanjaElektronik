@@ -24,8 +24,11 @@ import { columns } from "./column";
 import { get } from "http";
 // import { getCatgories } from "./lib/data";
 import Link from "next/link";
+import getBrands from "./lib/data";
 
-export default function BrandPage() {
+export default async function BrandPage() {
+  const brands = await getBrands();
+
   return (
     <div>
       {" "}
@@ -35,7 +38,7 @@ export default function BrandPage() {
             <Link href={"/dashboard/brands/create"}>
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Add Location
+                Add Brands
               </span>
             </Link>
           </Button>
@@ -45,11 +48,11 @@ export default function BrandPage() {
           <CardHeader>
             <CardTitle>Locations</CardTitle>
             <CardDescription>
-              Manage your Locations and view their sales performance.
+              Manage your Brand and view their sales performance.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <DataTable columns={columns} data={[]} />
+            <DataTable columns={columns} data={brands} />
           </CardContent>
         </Card>
       </div>
