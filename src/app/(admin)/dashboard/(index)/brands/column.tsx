@@ -31,12 +31,12 @@ export const columns: ColumnDef<Brand>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const brand = row.original;
+      const brands = row.original;
 
       return (
         <div className="space-x-4 inline-flex">
           <Button variant="default" size="sm" asChild>
-            <Link href={`/dashboard/brands/edit/${location.id}`}>
+            <Link href={`/dashboard/brands/edit/${brands.id}`}>
               <Edit className="w-4 h-4" />
               Edit
             </Link>

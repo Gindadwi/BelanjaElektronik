@@ -15,11 +15,17 @@ import { AlertCircle, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { postBrand } from "../lib/actions";
+import { postBrand, updateBrand } from "../lib/actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Brand } from "@prisma/client";
 const initialState: ActionResult = {
   error: "",
 };
+
+interface FormBrandProps {
+  type?: "ADD" | "EDIT";
+  data?: Brand;
+}
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -31,8 +37,14 @@ function SubmitButton() {
   );
 }
 
-function FormBrand() {
-  const [state, formAction] = useFormState(postBrand, initialState);
+export default function FormBrand({ data, type }: FormBrandProps) {
+  const updateWithId = (_: unknown, formData: FormData) =>
+    updateBrand(_, formData, data?.id ?? 0);
+
+  const [state, formAction] = useFormState(
+    type === "ADD" ? postBrand : updateWithId,
+    initialState
+  );
 
   return (
     <form action={formAction}>
@@ -82,6 +94,7 @@ function FormBrand() {
                         name="name"
                         type="text"
                         className="w-full"
+                        defaultValue={data?.name}
                       />
                     </div>
                     <div className="grid gap-3">
@@ -109,5 +122,3 @@ function FormBrand() {
     </form>
   );
 }
-
-export default FormBrand;

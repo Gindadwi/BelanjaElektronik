@@ -20,8 +20,10 @@ export const schemaCategory = z.object({
 export const schemaBrand = schemaCategory.extend({
   image: z
     .any()
-    .refine((file: File) => ALLOW_MIME_TYPES.includes(file.type), {
-      message: "File type not supported",
+    .refine((file) => file instanceof File && file.size > 0, {
+      message: "File tidak boleh kosong",
     })
-    .refine((file: File) => file?.name, { message: "File name is required" }),
+    .refine((file) => ALLOW_MIME_TYPES.includes(file.type), {
+      message: "Tipe file tidak didukung",
+    }),
 });
