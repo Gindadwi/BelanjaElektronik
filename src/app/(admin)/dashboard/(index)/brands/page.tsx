@@ -46,7 +46,7 @@ export default async function BrandPage() {
 
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Locations</CardTitle>
+            <CardTitle>Brand</CardTitle>
             <CardDescription>
               Manage your Brand and view their sales performance.
             </CardDescription>

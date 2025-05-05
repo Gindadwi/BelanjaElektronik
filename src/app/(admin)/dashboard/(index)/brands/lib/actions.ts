@@ -1,7 +1,7 @@
 "use server";
 
 import { schemaBrand } from "@/lib/schema";
-import { uploadFile } from "@/lib/supabase";
+import { deleteFile, uploadFile } from "@/lib/supabase";
 import { ActionResult } from "@/types";
 import { redirect } from "next/navigation";
 import { unknown } from "zod";
@@ -73,7 +73,7 @@ export async function updateBrand(
 
   try {
     await prisma.brand.update({
-      where: { id },
+      where: { id: id },
       data: {
         name: validate.data.name,
         logo: filename,
@@ -88,4 +88,37 @@ export async function updateBrand(
 
   return redirect("/dashboard/brands");
   1;
+}
+
+export async function deleteBrand(
+  _: unknown,
+  formData: FormData,
+  id: number
+): Promise<ActionResult> {
+  const brand = await prisma.brand.findFirst({
+    where: { id },
+    select: {
+      logo: true,
+    },
+  });
+  if (!brand) {
+    return {
+      error: "Brand not found",
+    };
+  }
+
+  try {
+    deleteFile(brand.logo, "brands");
+
+    await prisma.brand.delete({
+      where: { id: id },
+    });
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Error deleting brand",
+    };
+  }
+
+  return redirect("/dashboard/brands");
 }
