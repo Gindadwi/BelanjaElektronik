@@ -68,3 +68,7 @@
 ## install alert pemberitahuan
 
 - npx shadcn@latest add alert
+
+## install day js
+
+- npm install dayjs
